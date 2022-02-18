@@ -23,7 +23,7 @@ Below is a list of topics covered in each notebook.
 4. **Introduction to Reinforcement Learning and the Bandit Model**
    - Introduction to Reinforcement Learning
    - Bandit Model
-   - Contextual Bandit Model (To be added)
+   - Contextual Bandit Model (brief introduction)
 5. **Finite Markov Decision Process**
    - Markov Decision Process (MDP)
    - Policy Iteration and Value Iteration

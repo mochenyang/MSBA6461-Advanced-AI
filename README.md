@@ -19,7 +19,7 @@ Below is a list of topics covered in each notebook.
    - The Encoder-Decoder Architecture
    - Attention Mechanism
    - Transformer
-   - Application Case: BERT and GPT
+   - Application Case: BERT and GPT (with Hugging Face Tutorial)
 4. **Introduction to Reinforcement Learning and the Bandit Model**
    - Introduction to Reinforcement Learning
    - Bandit Model

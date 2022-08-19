@@ -1,6 +1,10 @@
 # MSBA6460-Advanced-AI
 
-This repository contains lecture materials for MSBA 6460: Advanced AI for Business Applications. It will be updated regularly as new materials are added. The most recent iteration of the course is Summer 2021.
+This repository contains lecture materials for MSBA 6460: Advanced AI for Business Applications. It will be updated regularly as new materials are added. The most recent iteration of the course is Summer 2022.
+
+**Most recent updates (Last edit: 08/19/2022):**
+
+- "Sequence to Sequence Model.ipynb": added an example of using BERT as an embedding layer to build a classification model.
 
 Below is a list of topics covered in each notebook.
 

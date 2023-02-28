@@ -4,7 +4,8 @@ This repository contains lecture materials for MSBA 6460: Advanced AI for Busine
 
 **Most recent updates (Last edit: 02/2023):**
 
-- "Sequence to Sequence Model.ipynb": added new section on large language models
+- "Sequence to Sequence Model" module: added new section on large language models
+- "Finite Markov Decision Process" module: added new section on temporal difference learning
 
 Below is a list of topics covered in each notebook.
 
@@ -30,6 +31,7 @@ Below is a list of topics covered in each notebook.
    - Contextual Bandit Model (brief introduction)
 5. **Finite Markov Decision Process** (Notebook 6)
    - Markov Decision Process (MDP)
-   - Policy Iteration and Value Iteration
+   - Dynamic Programming Methods: Policy Iteration and Value Iteration
    - Monte Carlo Method
    - Gradient Method
+   - Temporal Difference (TD) Learning (one-step TD, Sarsa, Q-learning)

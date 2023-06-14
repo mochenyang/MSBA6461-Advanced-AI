@@ -1,11 +1,10 @@
 # MSBA6460-Advanced-AI
 
-This repository contains lecture materials for MSBA 6460: Advanced AI for Business Applications. It will be updated regularly as new materials are added. The most recent iteration of the course is Spring 2023.
+This repository contains lecture materials for MSBA 6461: Advanced AI for Business Applications. It will be updated regularly as new materials are added. The most recent iteration of the course is Spring 2023.
 
-**Most recent updates (Last edit: 02/2023):**
+**Most recent updates (Last edit: 06/2023):**
 
-- "Sequence to Sequence Model" module: added new section on large language models
-- "Finite Markov Decision Process" module: added new section on temporal difference learning
+- Added ```pytorch``` implementation for NLP-related demonstrations under the "pytorch" folder.
 
 Below is a list of topics covered in each notebook.
 

@@ -20,8 +20,8 @@ Below is a list of topics covered in each notebook.
    - Bidirectional RNN
 3. **Sequence to Sequence Model** (Notebook 3)
    - The Encoder-Decoder Architecture
-   - Attention Mechanism
 4. **Transformer** (Notebook 4)
+   - Attention Mechanism
    - Introduction to Transformer Architecture
    - Application Case: BERT and GPT (with Hugging Face Tutorial)
    - Overview of Large Language Models

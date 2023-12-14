@@ -4,7 +4,7 @@ This repository contains lecture materials for MSBA 6461: Advanced AI for Busine
 
 **Most recent updates (Last edit: 12/2023):**
 
-- [ToDo]: move transformer-related topics into a separate notebook and expand with more details.
+- Added more transformer-related details into Note 4.
 
 Below is a list of topics covered in each notebook.
 
@@ -20,7 +20,7 @@ Below is a list of topics covered in each notebook.
    - Bidirectional RNN
 3. **Sequence to Sequence Model** (Notebook 3)
    - The Encoder-Decoder Architecture
-4. **Transformer** (Notebook 4)
+4. **Attention, Transformer, and LLMs** (Notebook 4)
    - Attention Mechanism
    - Introduction to Transformer Architecture
    - Application Case: BERT and GPT (with Hugging Face Tutorial)

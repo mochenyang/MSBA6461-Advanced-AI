@@ -5,3 +5,4 @@ gensim
 tensorflow
 keras
 pytorch
+transformers

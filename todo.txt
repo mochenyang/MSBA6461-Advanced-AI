@@ -1,0 +1,11 @@
+**This is for instructor only, students please ignore**
+
+- Notebook 0:
+    - modify homework assignments
+- Notebook 4:
+    - add implementation and demo
+- Notebook 5:
+    - add implementation based on Andrej
+- Notebook 6:
+    - TBD
+- Update requirements.txt with an env export

@@ -1,0 +1,7 @@
+sklearn
+numpy
+nltk
+gensim
+tensorflow
+keras
+pytorch

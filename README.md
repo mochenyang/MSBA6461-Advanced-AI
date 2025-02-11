@@ -28,10 +28,10 @@ Below is a list of topics covered in each notebook.
    - Attention Mechanism
 5. **Transformer** (Notebook 5)
    - Introduction to Transformer Architecture
-   - Application Case: BERT and GPT (with Hugging Face Tutorial)
+   - Transformer Implementation with in ```pytorch```
 6. **Large Language Model** (Notebook 6)
-   - Overview of Large Language Models
-   - Business applications of LLMs
+   - Overview of popular architectures and training processes
+   - Demo with BERT encoder
 
 In addition to the notebooks,
    - The ```data``` folder contains all the data used in the notebooks.

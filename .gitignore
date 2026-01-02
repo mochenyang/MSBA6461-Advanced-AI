@@ -130,3 +130,9 @@ dmypy.json
 
 # log files
 logs/
+
+# uv files
+.python-version
+pyproject.toml
+.venv/
+uv.lock

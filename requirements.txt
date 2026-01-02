@@ -4,6 +4,6 @@ nltk
 gensim
 tensorflow
 keras
-pytorch
+torch
 transformers
 tensorboard

@@ -181,7 +181,7 @@ if __name__ == "__main__":
     BATCH_SIZE = 32
     NUM_ENCODER_LAYERS = 3
     NUM_DECODER_LAYERS = 3
-    NUM_EPOCHS = 1
+    NUM_EPOCHS = 1000
     
     # instantiate the model
     model = Seq2SeqTransformer(EMB_SIZE, NHEAD, NUM_ENCODER_LAYERS, NUM_DECODER_LAYERS, FFN_HID_DIM, VOCAB_SIZE)

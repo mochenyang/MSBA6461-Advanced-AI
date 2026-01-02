@@ -2,6 +2,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.nn import Transformer
+from torch.utils.tensorboard import SummaryWriter
 
 # Simulate data
 # set random seed for reproducibility
@@ -180,7 +181,7 @@ if __name__ == "__main__":
     BATCH_SIZE = 32
     NUM_ENCODER_LAYERS = 3
     NUM_DECODER_LAYERS = 3
-    NUM_EPOCHS = 25
+    NUM_EPOCHS = 1
     
     # instantiate the model
     model = Seq2SeqTransformer(EMB_SIZE, NHEAD, NUM_ENCODER_LAYERS, NUM_DECODER_LAYERS, FFN_HID_DIM, VOCAB_SIZE)
@@ -192,7 +193,12 @@ if __name__ == "__main__":
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
     eval_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=False)
     
+    # Initialize TensorBoard writer and loss storage
+    # make sure to create a "logs" folder in the parent directory before running the code
+    writer = SummaryWriter('../logs/transformer')
+    
     # training
+    step = 0
     for epoch in range(NUM_EPOCHS):
         # start model training
         model.train()
@@ -212,21 +218,26 @@ if __name__ == "__main__":
             # also flatten the ground truth outputs to shape (batch_size * seq_len)
             tgt_out = tgt_output.reshape(-1)
             loss = criterion(outputs, tgt_out)
-            total_loss += loss.item()
+            loss_item = loss.item()
+            total_loss += loss_item
+            writer.add_scalar('Loss/train_step', loss_item, step)
             loss.backward()
             optimizer.step()
-        print(f"Epoch: {epoch}, Training Loss: {total_loss}")
+            step += 1
+        writer.add_scalar('Loss/train_epoch', total_loss, epoch)
+        print(f"Epoch: {epoch}, Training Loss: {total_loss}")        
         
-        # monitor loss test set
+        # monitor loss on test set
         model.eval()
-        test_loss = 0      
+        test_loss = 0
+        test_step = epoch * len(eval_loader)      
         with torch.no_grad():
-            for src, tgt in eval_loader:
+            for test_batch_idx, (src, tgt) in enumerate(eval_loader):
                 encoder_output = model.encode(src)
                 # decoding starts with the "start" token
                 tgt_idx = [VOCAB.index('s')]
                 pred_num = '0.'
-                for i in range(MAX_DIGITS):
+                for i in range(MAX_DIGITS + 1): # 0 to 8 (9 iterations for 8 digits, including end token)
                     # prepare the input tensor for the decoder, adding the batch dimension
                     decoder_input = torch.LongTensor(tgt_idx).unsqueeze(0)
                     # the decoder output has shape (1, seq_len, d_model) and the last position in sequence is the prediction for next token
@@ -234,7 +245,10 @@ if __name__ == "__main__":
                     # the predicted logits has shape (1, seq_len, vocab_size)
                     logits = model.generator(decoder_output)
                     # calculate test loss based on most recent token prediction, that is logits[:, -1, :]
-                    test_loss += criterion(logits[:, -1, :], tgt[0][i].unsqueeze(0)).item()
+                    step_loss = criterion(logits[:, -1, :], tgt[0][i+1].unsqueeze(0)).item()
+                    test_loss += step_loss
+                    writer.add_scalar('Loss/test_step', step_loss, test_step)
+                    test_step += 1
                     # the actual predicted token is the one with highest logit score
                     # here, .argmax(2) makes sure the max is taken on the last dimension, which is the vocabulary dimension, and [:, -1] makes sure that we are looking at the last position in the sequence
                     pred_token = logits.argmax(2)[:,-1].item()
@@ -242,10 +256,14 @@ if __name__ == "__main__":
                     tgt_idx.append(pred_token)
                     pred_num += VOCAB[pred_token]
                     if pred_token == VOCAB.index('e'):
-                        break            
+                        break
                 # Convert the predicted sequence to a number - if you want, you can use it to compute other metrics such as RMSE
                 try:
                     pred_num = float(pred_num)  # Convert the accumulated string to a float
                 except ValueError:
                     pred_num = 0.0  # Handle any conversion errors gracefully
+        writer.add_scalar('Loss/test_epoch', test_loss, epoch)
         print("Test Loss: ", test_loss)
+    
+    # Close TensorBoard writer
+    writer.close()

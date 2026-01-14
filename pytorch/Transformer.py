@@ -17,8 +17,8 @@ Y_test = Y[4000:]
 
 # vocab has single-digits, space, start, end
 VOCAB = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', 's', 'e']
-# for simplicity, we restrict each input/output number to 8 digits
-MAX_DIGITS = 8
+# for simplicity, we restrict each input/output number to 3 digits
+MAX_DIGITS = 3
 
 class CustomDataset(torch.utils.data.Dataset):
     def __init__(self, X, Y, vocab):
@@ -35,12 +35,12 @@ class CustomDataset(torch.utils.data.Dataset):
         for row in data:
             if type == 'Y':
                 # in this case, row is a scalar, we convert it to a string and remove the "0." prefix
-                # the '{:8f}'.format(...) part ensures the number has 8 digits after the decimal point, and converts it to a string
+                # ensures the number has MAX_DIGITS digits after the decimal point, and converts it to a string
                 # the '[2:]' part removes the "0." prefix
-                row_str = '{:.8f}'.format(row)[2:]
+                row_str = str('{:.' + str(MAX_DIGITS) + 'f}').format(row)[2:]
             if type == 'X':
                 # in this case, we do the same processing to each feature value, then concatenate them to a longer sequence, separated by blank spaces
-                row_str = ' '.join(['{:.8f}'.format(x)[2:] for x in row])
+                row_str = ' '.join([str('{:.' + str(MAX_DIGITS) + 'f}').format(x)[2:] for x in row])
             # also need to prepend 's' and append 'e' to the sequence
             row_str = 's' + row_str + 'e'
             # convert to indices in vocabulary
@@ -82,7 +82,7 @@ class PositionalEncoding(nn.Module):
         :param max_len: the maximum length of the sentence
         """
         super(PositionalEncoding, self).__init__()
-        # setting max_len to 100 here, because the largest input sequence is 91 tokens long (10 * 8 digits + 9 spaces + 1 start + 1 end), so 100 is enough
+        # setting max_len to 100 here, because the largest input sequence is 37 tokens long (10 * 3 digits + 9 spaces + 1 start + 1 end), so 100 is enough
         # intialize the positional encoding, pe.shape = (max_len, d_model)        
         pe = torch.zeros(max_len, d_model)
         # generate a tensor of shape (max_len, 1), with values from 0 to max_len - 1, to represent all unique positions
@@ -237,7 +237,7 @@ if __name__ == "__main__":
                 # decoding starts with the "start" token
                 tgt_idx = [VOCAB.index('s')]
                 pred_num = '0.'
-                for i in range(MAX_DIGITS + 1): # 0 to 8 (9 iterations for 8 digits, including end token)
+                for i in range(MAX_DIGITS + 1): # 0 to MAX_DIGITS (4 iterations for 3 digits, including end token)
                     # prepare the input tensor for the decoder, adding the batch dimension
                     decoder_input = torch.LongTensor(tgt_idx).unsqueeze(0)
                     # the decoder output has shape (1, seq_len, d_model) and the last position in sequence is the prediction for next token

@@ -164,7 +164,7 @@ class Seq2SeqTransformer(nn.Module):
         """
         :param tgt: the sequence to the decoder (required). with shape (batch_size, seq_len, d_model)
         :param memory: the sequence from the last layer of the encoder (required). with shape (batch_size, seq_len, d_model)
-        :return: the decoder output tensor with shape (batch_size, seq_len, d_model)
+        :return: the decoder output tensor with shape (batch_size, seq_len, d_model), with proper causal masking
         """
         return self.transformer.decoder(self.positional_encoding(self.tok_emb(tgt)), memory)
     
@@ -181,11 +181,13 @@ if __name__ == "__main__":
     BATCH_SIZE = 32
     NUM_ENCODER_LAYERS = 3
     NUM_DECODER_LAYERS = 3
-    NUM_EPOCHS = 1000
+    NUM_EPOCHS = 100
     
     # instantiate the model
     model = Seq2SeqTransformer(EMB_SIZE, NHEAD, NUM_ENCODER_LAYERS, NUM_DECODER_LAYERS, FFN_HID_DIM, VOCAB_SIZE)
+    # use Adam optimizer with learning rate scheduler
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=NUM_EPOCHS)    
     criterion = nn.CrossEntropyLoss()
     
     # Create DataLoader for batching
@@ -222,15 +224,19 @@ if __name__ == "__main__":
             total_loss += loss_item
             writer.add_scalar('Loss/train_step', loss_item, step)
             loss.backward()
+            # clip the gradients to prevent exploding gradients
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
             step += 1
+        # normalize total loss by number of examples in the training batch
+        total_loss = total_loss / len(train_loader)
         writer.add_scalar('Loss/train_epoch', total_loss, epoch)
-        print(f"Epoch: {epoch}, Training Loss: {total_loss}")        
+        print(f"Epoch: {epoch}, Average Training Loss Per Example: {total_loss}")        
         
         # monitor loss on test set
         model.eval()
         test_loss = 0
-        test_step = epoch * len(eval_loader)      
+        test_step = epoch * len(eval_loader)
         with torch.no_grad():
             for test_batch_idx, (src, tgt) in enumerate(eval_loader):
                 encoder_output = model.encode(src)
@@ -262,8 +268,13 @@ if __name__ == "__main__":
                     pred_num = float(pred_num)  # Convert the accumulated string to a float
                 except ValueError:
                     pred_num = 0.0  # Handle any conversion errors gracefully
+        # normalize test loss by number of examples in the eval batch
+        test_loss = test_loss / len(eval_loader)
         writer.add_scalar('Loss/test_epoch', test_loss, epoch)
-        print("Test Loss: ", test_loss)
+        print("Average Test Loss Per Example: ", test_loss)
+
+        # step the learning rate scheduler
+        scheduler.step()
     
     # Close TensorBoard writer
     writer.close()

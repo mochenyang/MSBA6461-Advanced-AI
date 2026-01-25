@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 from torch.nn import Transformer
 from torch.utils.tensorboard import SummaryWriter
+import time
 
 # Simulate data
 # set random seed for reproducibility
@@ -181,13 +182,13 @@ if __name__ == "__main__":
     BATCH_SIZE = 32
     NUM_ENCODER_LAYERS = 3
     NUM_DECODER_LAYERS = 3
-    NUM_EPOCHS = 100
+    NUM_EPOCHS = 50
     
     # instantiate the model
     model = Seq2SeqTransformer(EMB_SIZE, NHEAD, NUM_ENCODER_LAYERS, NUM_DECODER_LAYERS, FFN_HID_DIM, VOCAB_SIZE)
     # use Adam optimizer with learning rate scheduler
-    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=NUM_EPOCHS)    
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=NUM_EPOCHS)
     criterion = nn.CrossEntropyLoss()
     
     # Create DataLoader for batching
@@ -197,7 +198,8 @@ if __name__ == "__main__":
     
     # Initialize TensorBoard writer and loss storage
     # make sure to create a "logs" folder in the parent directory before running the code
-    writer = SummaryWriter('../logs/transformer')
+    # differentiate different runs by timestamp
+    writer = SummaryWriter('../logs/transformer' + str(int(time.time())))
     
     # training
     step = 0
@@ -278,3 +280,6 @@ if __name__ == "__main__":
     
     # Close TensorBoard writer
     writer.close()
+
+    # save the model for later inspection
+    torch.save(model.state_dict(), "../models/transformer_epoch" + str(NUM_EPOCHS) + ".pth")

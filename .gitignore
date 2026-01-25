@@ -131,6 +131,9 @@ dmypy.json
 # log files
 logs/
 
+# saved models
+models/
+
 # uv files
 .python-version
 pyproject.toml

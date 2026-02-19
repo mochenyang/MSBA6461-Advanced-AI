@@ -2,7 +2,7 @@
 
 This repository contains lecture materials for MSBA 6461: Advanced AI for Natural Language Processing. It will be updated regularly as new materials are added. The most recent iteration of the course is Spring 2024.
 
-**Important Change**: As a result of the overall MSBA curiculum revision, the course has been renamed to "Advanced AI for Natural Language Processing" (previously "Advanced AI for Business Applications"). The course content has also been updated to reflect the new design. Specifically, all reinforcement learning materials have been moved to a folder named ```RL (legacy)``` and will not be covered in the course. The new course will focus on NLP and language models.
+**Important Change**: As a result of the overall MSBA curiculum revision, the course has been renamed to "Advanced AI for Natural Language Processing" (previously "Advanced AI for Business Applications"). The course content has also been updated to reflect the new design. Specifically, all reinforcement learning materials have been moved to a folder named ```RL``` and will not be covered in the course. The new course will focus on NLP and language models.
 
 **Most recent updates (Last edit: summer 2024):**
 - Added notebooks 5 and 6 with more transformer and LLM content.
@@ -37,7 +37,7 @@ In addition to the notebooks,
    - The ```data``` folder contains all the data used in the notebooks.
    - The ```pytorch``` folder contains the pytorch implementation for NLP-related demonstrations.
    - The ```.vscode``` folder contains display settings for VSCode.
-   - The ```RL (legacy)``` folder contains reinforcement learning materials that were previously covered in the course.
+   - The ```RL``` folder contains reinforcement learning materials that were previously covered in the course.
 
 
 ## Software Setup

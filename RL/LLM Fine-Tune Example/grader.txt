@@ -1,0 +1,12 @@
+{
+  "name": "Causal inference TA quality",
+  "type": "score_model",
+  "input": [
+    {
+      "role": "user",
+      "type": "message",
+      "content": "You are grading an answer to a causal inference question. Score the MODEL ANSWER from 0.0 to 1.0.\n\nThe user asked the model to answer like a causal inference TA in 4 bullets.\n\nUse this rubric:\n- 1.0: Clearly avoids causal overclaim; identifies plausible confounders/selection; proposes a credible identification strategy (e.g., RCT, DiD, IV, RD, event study); and states key assumptions/limitations (e.g., parallel trends, exclusion restriction, spillovers, measurement changes). Response is concise, coherent, and in (about) 4 bullets.\n- 0.75: Mostly correct but missing one important element (e.g., no assumptions, or weak identification discussion) OR minor format issues.\n- 0.5: Partially correct but missing multiple key elements (e.g., mentions confounding but no identification strategy) OR includes some causal overclaim.\n- 0.25: Mostly unhelpful, vague, or largely incorrect; strong causal claims without evidence.\n- 0.0: Completely wrong/irrelevant or confidently asserts causality from correlation.\n\nReturn ONLY a single number between 0 and 1.\n\nREFERENCE ANSWER:\n{{item.reference}}\n\nMODEL ANSWER:\n{{sample.output_text}}"
+    }
+  ],
+  "model": "gpt-4o-2024-08-06"
+}

@@ -31,7 +31,8 @@ Below is a list of topics covered in each notebook.
    - Transformer Implementation with in ```pytorch```
 6. **Large Language Model** (Notebook 6)
    - Overview of popular architectures and training processes
-   - Demo with BERT encoder
+   - Illustration of auto-regressive decoding
+   - KV Cache
 
 In addition to the notebooks,
    - The ```data``` folder contains all the data used in the notebooks.

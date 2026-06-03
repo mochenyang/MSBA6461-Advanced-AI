@@ -4,9 +4,6 @@ This repository contains lecture materials for MSBA 6461: Advanced AI for Natura
 
 **Important Change**: As a result of the overall MSBA curiculum revision, the course has been renamed to "Advanced AI for Natural Language Processing" (previously "Advanced AI for Business Applications"). The course content has also been updated to reflect the new design. Specifically, all reinforcement learning materials have been moved to a folder named ```RL``` and will not be covered in the course. The new course will focus on NLP and language models.
 
-**Most recent updates (Last edit: summer 2024):**
-- Added notebooks 5 and 6 with more transformer and LLM content.
-
 
 ## Topics Covered in this Course
 
